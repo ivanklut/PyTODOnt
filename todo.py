@@ -1,4 +1,6 @@
-import bd_sqlite as bd
+# Импорт модуля уже может быть примером инверсии зависимостей,
+# но тут нужна теория, поэтому пока закомментируем.
+#  import bd_sqlite as bd
 
 
 class Todo:
@@ -12,7 +14,12 @@ class Todo:
     Методы: save - создать, put - изменить, get - получить, det - удалить
     """
 
-    def __init__(self, id=None, do='', status=False, period=0, importance=0):
+    def __init__(self, db, id=None, do='', status=False, period=0, importance=0):
+        # Здесть происходит инверсия зависимостей (Dependency Inversion),
+        # через использование паттерна "инжекции зависимости" (Dependency Injection) через конструктор.
+        # Это происходит на уровне класса.
+        self.db = db
+
         self.do = do
         self.status = status
         self.period = period
@@ -25,7 +32,10 @@ class Todo:
         if 'status' in data:
             self.status = data['status']
 
-        bd.zapis(self.do, self.status, self.period, self.importance)
+        # Здесь мы используем "интерфейс" для БД self.bd.zapis
+        # Это возможно сказать из-за динамичности питона и "утиной" типизации.
+        # Это можно почувствовать если попробовать написать тест без использования БД.
+        self.bd.zapis(self.do, self.status, self.period, self.importance)
 
     def put(self):
         pass
