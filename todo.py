@@ -18,7 +18,6 @@ class Todo:
         self.period = period
         self.importance = importance
 
-
     def save(self, data):
         # Это какой-то костыль, полагаю так не должно быть:
         if 'do' in data:
@@ -28,18 +27,11 @@ class Todo:
 
         bd.zapis(self.do, self.status, self.period, self.importance)
 
-
     def put(self):
         pass
-
 
     def get(self):
         pass
 
-
     def det(self):
         pass
-
-
-
-
